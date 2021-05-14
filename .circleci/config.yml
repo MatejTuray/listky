@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.3.0
+  aws-cli: circleci/aws-cli@2.0.0
+jobs:  
+  test_deploy_dev:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - aws-cli/install
+      - node/install-packages
+      - run: 
+          name: install java
+          command: |
+              sudo apt-get update && sudo apt-get install default-jre default-jdk
+      - run:
+          command: npx serverless config credentials --provider aws --key AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY --profile default
+      - run:
+          command: npx serverless dynamodb install        
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          command: npx serverless offline start
+          background: true
+      - run:
+          shell: /bin/sh
+          command: |
+            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
+            :
+      - run:
+          name: Wait for server
+          command: dockerize -wait tcp://localhost:3000 -timeout 15m
+      - run:
+          command: npx jest      
+      - run: 
+          command: npx serverless deploy
+
+workflows:
+  test:
+    jobs:     
+      - test_deploy_dev
