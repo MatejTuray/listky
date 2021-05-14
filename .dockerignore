@@ -1,0 +1,4 @@
+.build
+.dynamodb
+.vscode
+node_modules
