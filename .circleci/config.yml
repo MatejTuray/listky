@@ -25,6 +25,9 @@ jobs:
             wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
             :
       - run:
+          name: Wait for server
+          command: dockerize -wait tcp://localhost:3000 -timeout 15m
+      - run:
           command: npx jest   
       - run: 
           command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET
