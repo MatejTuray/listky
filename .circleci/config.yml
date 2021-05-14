@@ -18,11 +18,14 @@ jobs:
             DOCKERIZE_VERSION: v0.3.0
       - run:
           command: npx serverless offline
-          background: true     
+          background: true
       - run:
-          command: npx jest
+          shell: /bin/sh
+          command: |
+            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000
+            :
       - run:
-          command: bash ./stopOffline.sh
+          command: npx jest   
       - run: 
           command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET
       - run: 
