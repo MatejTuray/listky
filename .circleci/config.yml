@@ -20,7 +20,7 @@ jobs:
           command: |
               sudo apt-get update && sudo apt-get install default-jre default-jdk
       - run:
-          command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET --profile default
+          command: npx serverless config credentials --provider aws --key AWS_ACCESS_KEY_ID --secret AWS_SECRET_ACCESS_KEY --profile default
       - run:
           command: npx serverless dynamodb install        
       - run:
@@ -32,7 +32,7 @@ jobs:
           command: npx serverless offline start
           background: true
       - run:
-          command: echo AWS_KEY && echo AWS_SECRET
+          command: printenv AWS_ACCESS_KEY_ID && printenv AWS_SECRET_ACCESS_KEY
       - run:
           shell: /bin/sh
           command: |
