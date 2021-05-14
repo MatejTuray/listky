@@ -1,3 +1,4 @@
+#! /bin/bash
 TMPFILE=.offline$$.log
 if [ -f .offline.pid ]; then
     echo "Found file .offline.pid. Not starting."
