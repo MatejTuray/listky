@@ -25,6 +25,10 @@ jobs:
     steps:
       - checkout
       - node/install-packages
+      - run: 
+          name: install java
+          command: |
+              apt-get update && apt-get install default-jre default-jdk
       - run:
           command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET --profile default
       - run:
