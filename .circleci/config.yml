@@ -1,7 +1,18 @@
 version: 2.1
 orbs:
   node: circleci/node@4.3.0
+  aws-cli: circleci/aws-cli@2.0.0
 jobs:
+  aws-cli-setup:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/install
+      - aws-cli/setup:
+          profile-name: default
+          aws-access-key-id: AWS_KEY
+          aws-secret-access-key: AWS_SECRET
+      - run: echo "AWS cli configured!"
   test_deploy_dev:
     executor:
       name: node/default
