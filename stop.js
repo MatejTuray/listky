@@ -1,0 +1,1 @@
+require('shelljs').exec('stopOffline.sh');
