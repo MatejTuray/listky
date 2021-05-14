@@ -1,11 +1,12 @@
 #! /bin/bash
+echo "Starting offline!"
 TMPFILE=.offline$$.log
 if [ -f .offline.pid ]; then
     echo "Found file .offline.pid. Not starting."
     exit 1
 fi
 
-serverless offline start 2>1 > $TMPFILE &
+npx serverless offline start 2>1 > $TMPFILE &
 PID=$$
 echo $PID > .offline.pid
 
