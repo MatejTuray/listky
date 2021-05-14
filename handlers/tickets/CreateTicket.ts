@@ -25,7 +25,7 @@ export const CreateTicket = async (req: Request, res: Response) => {
   }
   try {
     const params = generateDynamoParams(req.body);
-    const data = await dynamoDb.update(params).promise();
+    const data = await dynamoDb.update(params).promise();  
     return res.json(await processResponse(data.Attributes));
   } catch (error) {
     return res.status(400).json({ errorMessage: error });
