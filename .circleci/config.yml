@@ -1,4 +1,14 @@
 version: 2.1
+machine:
+  environment:
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+  java:
+    version: openjdk7
+  post:
+    - curl -k -L -o dynamodb-local.tgz http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
+    - tar -xzf dynamodb-local.tgz
+    - java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb:
+        background: true
 orbs:
   node: circleci/node@4.3.0
   aws-cli: circleci/aws-cli@2.0.0
