@@ -8,20 +8,9 @@ orbs:
   node: circleci/node@4.3.0
   aws-cli: circleci/aws-cli@2.0.0
 jobs:  
-  aws-cli-setup:
-    executor: aws-cli/default
-    steps:
-      - checkout
-      - aws-cli/install
-      - aws-cli/setup:
-          profile-name: default
-          aws-access-key-id: AWS_KEY
-          aws-secret-access-key: AWS_SECRET
-      - run: echo "AWS cli configured!"
   test_deploy_dev:
-    executor:
-      name: node/default
-      tag: "14.14"
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - node/install-packages
@@ -59,6 +48,5 @@ jobs:
 
 workflows:
   test:
-    jobs:
-      - aws-cli-setup
+    jobs:     
       - test_deploy_dev
