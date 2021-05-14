@@ -1,15 +1,20 @@
-version: 2.1
+version: '2.1'
 orbs:
-  node: circleci/node@1.1
+  node: circleci/node@4.3.0
 jobs:
-  build:
+  test:
     executor:
       name: node/default
       tag: '14'
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install serverless
-            - run: npm install
-            - run: npm run test-ci
+      - node/install-packages
+      - run:
+         command: npm install -g serverless
+      - run:        
+          command: npm run test-ci  
+
+workflows:
+  test_my_app:
+    jobs:
+      - test
