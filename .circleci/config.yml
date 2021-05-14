@@ -21,10 +21,7 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          command: npx serverless config credentials --provider aws \
-            --key AWS_KEY\
-            --secret AWS_SECRET \
-            --profile default
+          command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET --profile default
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -42,9 +39,7 @@ jobs:
           name: Wait for server
           command: dockerize -wait tcp://localhost:3000 -timeout 15m
       - run:
-          command: npx jest   
-      - run: 
-          command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET
+          command: npx jest      
       - run: 
           command: npx serverless deploy
 
