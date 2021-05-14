@@ -8,7 +8,7 @@
     "service:stop": "node stop.js",
     "offline": "serverless offline start",
     "test": "npm run service:start && jest && npm run service:stop",
-    "test-ci": "./startOffline && jest && ./stopOffline"
+    "test-circleci": "./startOffline.sh && jest && ./stopOffline.sh"
   },
   "author": "",
   "license": "ISC",
