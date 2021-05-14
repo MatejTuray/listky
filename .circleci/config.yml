@@ -5,14 +5,24 @@ jobs:
   test:
     executor:
       name: node/default
-      tag: '14.14'
+      tag: "14.14"
     steps:
       - checkout
       - node/install-packages
       - run:
-         command: npm install serverless
-      - run:        
-          command: npm run test-circleci  
+          command: npm install serverless
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          command: npx serverless offline
+      - run:
+          name: Wait for serverless offline
+          command: dockerize -wait tcp://localhost:3000 -timeout 5m
+      - run:
+          command: jest
 
 workflows:
   test:

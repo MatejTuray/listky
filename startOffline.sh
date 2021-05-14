@@ -11,6 +11,6 @@ PID=$$
 echo $PID > .offline.pid
 
 while ! grep "server ready" $TMPFILE
-do sleep 1; done
+do echo $TMPFILE && sleep 1;  done
 
 rm $TMPFILE
