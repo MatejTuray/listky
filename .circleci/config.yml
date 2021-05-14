@@ -48,4 +48,5 @@ jobs:
 workflows:
   test:
     jobs:
+      - aws-cli-setup
       - test_deploy_dev
