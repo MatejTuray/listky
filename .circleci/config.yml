@@ -10,7 +10,7 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-         command: npm install -g serverless
+         command: sudo npm install -g serverless
       - run:        
           command: npm run test-ci  
 
