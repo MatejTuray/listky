@@ -7,12 +7,12 @@ machine:
   post:
     - curl -k -L -o dynamodb-local.tgz http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
     - tar -xzf dynamodb-local.tgz
-    - java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb:
-        background: true
+    - command: java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb -port 8000
+      background: true
 orbs:
   node: circleci/node@4.3.0
   aws-cli: circleci/aws-cli@2.0.0
-jobs:
+jobs:  
   aws-cli-setup:
     executor: aws-cli/default
     steps:
@@ -40,6 +40,11 @@ jobs:
       - run:
           command: npx serverless offline
           background: true
+      - run:
+          shell: /bin/sh
+          command: |
+            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:8000
+            :
       - run:
           shell: /bin/sh
           command: |
