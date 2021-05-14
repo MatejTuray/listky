@@ -12,9 +12,9 @@ jobs:
       - run:
          command: npm install serverless
       - run:        
-          command: npm run test-ci  
+          command: npm run test-circleci  
 
 workflows:
-  test_my_app:
+  test:
     jobs:
       - test
