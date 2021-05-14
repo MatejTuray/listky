@@ -32,10 +32,7 @@ jobs:
           command: npx serverless offline start
           background: true
       - run:
-          shell: /bin/sh
-          command: |
-            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:8000
-            :
+          command: echo AWS_KEY && echo AWS_SECRET
       - run:
           shell: /bin/sh
           command: |
