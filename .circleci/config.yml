@@ -18,12 +18,9 @@ jobs:
             DOCKERIZE_VERSION: v0.3.0
       - run:
           command: npx serverless offline
-          background: true
+          background: true     
       - run:
-          name: Wait for serverless offline
-          command: dockerize -wait tcp://localhost:3000 -timeout 5m
-      - run:
-          command: jest
+          command: npx jest
       - run:
           command: bash ./stopOffline.sh
       - run: 
