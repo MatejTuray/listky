@@ -22,6 +22,8 @@ jobs:
       - run:
           command: npx serverless config credentials --provider aws --key AWS_KEY --secret AWS_SECRET --profile default
       - run:
+          command: npx serverless dynamodb install        
+      - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
